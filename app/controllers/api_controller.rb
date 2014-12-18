@@ -10,7 +10,7 @@ class ApiController < ActionController::Base
     end
     
     def cardinfo
-        @cards = Card.all
+        @cards = Card.find(1)
             respond_to do |format|
               format.html
               format.json { render :json => @cards }
