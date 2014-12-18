@@ -10,6 +10,10 @@ class ApiController < ActionController::Base
     
     def cardinfo
         @cards = Card.find(1)
-        render json: {message: '#{@cards}'}, status: 200
+        format.json {
+            render json: => {
+                :cards => @cards
+                }
+        }
     end
 end
