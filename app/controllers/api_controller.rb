@@ -4,7 +4,7 @@ class ApiController < ActionController::Base
         
         @api = "test"
         
-        render json: {message: 'android'}
+        render json: {message: 'android'}, status: 200
         
     end
 end
