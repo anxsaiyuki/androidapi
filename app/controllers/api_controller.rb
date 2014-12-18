@@ -11,9 +11,6 @@ class ApiController < ActionController::Base
     
     def cardinfo
         @cards = Card.find(1)
-            respond_to do |format|
-              format.html
-              format.json { render :json => @cards }
-            end
+        render json: {data: @cards}, status: 200  
     end
 end
