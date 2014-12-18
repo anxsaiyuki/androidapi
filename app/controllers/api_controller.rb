@@ -1,5 +1,6 @@
 class ApiController < ActionController::Base
-
+    respond_to :json, :html
+    
     def index
         
         @api = "test"
@@ -9,11 +10,10 @@ class ApiController < ActionController::Base
     end
     
     def cardinfo
-        @cards = Card.find(1)
-        format.json {
-            render json: => {
-                :cards => @cards
-                }
-        }
+        @cards = Card.all
+            respond_to do |format|
+              format.html
+              format.json { render :json => @cards }
+            end
     end
 end
