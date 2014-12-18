@@ -1,0 +1,43 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  card_id: MyString
+  name: MyString
+  type: 
+  color: MyString
+  g_sign: MyString
+  total_cost: 1
+  roll_cost: 1
+  atk_power: 1
+  sup_power: 1
+  def_power: 1
+  area: MyString
+  special_description: MyString
+  description: MyString
+  effect: MyString
+  pack_name: MyString
+  rarity: MyString
+  serial: MyString
+  artist: MyString
+  img_name: MyString
+
+two:
+  card_id: MyString
+  name: MyString
+  type: 
+  color: MyString
+  g_sign: MyString
+  total_cost: 1
+  roll_cost: 1
+  atk_power: 1
+  sup_power: 1
+  def_power: 1
+  area: MyString
+  special_description: MyString
+  description: MyString
+  effect: MyString
+  pack_name: MyString
+  rarity: MyString
+  serial: MyString
+  artist: MyString
+  img_name: MyString
