@@ -7,4 +7,9 @@ class ApiController < ActionController::Base
         render json: {message: 'android'}, status: 200
         
     end
+    
+    def cardinfo
+        @cards = Card.find(1)
+        p @cards
+    end
 end
