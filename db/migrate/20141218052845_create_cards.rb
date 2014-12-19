@@ -20,7 +20,8 @@ class CreateCards < ActiveRecord::Migration
       t.string :serial
       t.string :artist
       t.string :img_name
-
+      t.string :prodid
+        
       t.timestamps
     end
   end
