@@ -13,7 +13,7 @@ class ApiController < ActionController::Base
         p "===================================================="
         p params
         p "===================================================="
-        @cards = Card.all.limit(20)
+        @cards = Card.all.limit(100)
         render json: {data: @cards}, status: 200  
     end
 end
