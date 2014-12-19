@@ -10,7 +10,8 @@ class ApiController < ActionController::Base
     end
     
     def cardinfo
-        @cards = Card.all.limit(4)
+        p params
+        @cards = Card.all.limit(20)
         render json: {data: @cards}, status: 200  
     end
 end
