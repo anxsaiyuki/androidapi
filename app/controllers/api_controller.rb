@@ -16,17 +16,17 @@ class ApiController < ActionController::Base
         p "=================================================="
         
         @cards = Card.all
-        @cards = @cards.where(color: params[:color]).to_a if params[:color]
-        @cards = @cards.where(card_type: params[:card_type]).to_a if params[:card_type]
+        @cards = @cards.where(color: params[:color]) if params[:color]
+        @cards = @cards.where(card_type: params[:card_type]) if params[:card_type]
         
         
         
         
         p "===================================================="
-        p @cards
+        p @cards.to_a
         p "=================================================="
      
         
-        render json: {data: @cards}, status: 200  
+        render json: {data: @cards.to_a}, status: 200  
     end
 end
