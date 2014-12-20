@@ -13,7 +13,11 @@ class ApiController < ActionController::Base
         p "===================================================="
         p params
         p "===================================================="
-        @cards = Card.all.limit(100)
+        
+        @cards = Card.all
+        @cards = @cards.where('card_type', params[:card_type]) if params[:card_type]
+        @cards = @cards.where('color', params[:color]) if params[:color]
+        
         render json: {data: @cards}, status: 200  
     end
 end
