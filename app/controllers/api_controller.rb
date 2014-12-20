@@ -15,7 +15,7 @@ class ApiController < ActionController::Base
         p params
         p "=================================================="
         
-        @cards = Card.find_by_card_type(params[:card_type])
+        @cards = Card.find_by_card_type("UNIT")
      
         
         render json: {data: @cards}, status: 200  
