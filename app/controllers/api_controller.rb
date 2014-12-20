@@ -15,7 +15,7 @@ class ApiController < ActionController::Base
         p params
         p "=================================================="
         
-        @cards = Card.find_by_card_type("UNIT").all
+        @cards = Card.find_all_by_card_type("UNIT")
         p "===================================================="
         p @cards
         p "=================================================="
