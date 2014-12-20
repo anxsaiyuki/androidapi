@@ -15,7 +15,7 @@ class ApiController < ActionController::Base
         p params
         p "=================================================="
         
-        @cards = Card.where("card_type = UNIT")
+        @cards = Card.where("card_type", "UNIT")
         p "===================================================="
         p @cards
         p "=================================================="
