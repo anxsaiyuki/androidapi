@@ -17,6 +17,8 @@ class ApiController < ActionController::Base
         
         @cards = Card.all
         @cards = @cards.where(color: params[:color]).to_a if params[:color]
+        @cards = @cards.where(card_type: params[:card_type]).to_a if params[:card_type]
+        
         
         
         
