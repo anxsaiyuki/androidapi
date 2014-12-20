@@ -18,14 +18,8 @@ class ApiController < ActionController::Base
         @cards = Card.all
         @cards = @cards.where(color: params[:color]) if params[:color]
         @cards = @cards.where(card_type: params[:card_type]) if params[:card_type]
+        @cards = @cards.where(g_sign: params[:g_sign]) if params[:g_sign]
         
-        
-        
-        
-        p "===================================================="
-        p @cards.to_a
-        p "=================================================="
-     
         
         render json: {data: @cards.to_a}, status: 200  
     end
