@@ -15,8 +15,8 @@ class ApiController < ActionController::Base
         p params
         p "=================================================="
         
-        @cards = Card.all
-        @cards = @cards.where("id" , "1").to_a
+        
+        @cards = Card.where("id" , "1").to_a
         p "===================================================="
         p @cards
         p "=================================================="
