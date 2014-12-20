@@ -15,8 +15,10 @@ class ApiController < ActionController::Base
         p params
         p "=================================================="
         
+        @cards = Card.all
+        @cards = @card.where(color: params[:color]).to_a if params[:color]
         
-        @cards = Card.where(color: "青").to_a
+        
         p "===================================================="
         p @cards
         p "=================================================="
