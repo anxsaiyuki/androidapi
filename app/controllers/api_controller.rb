@@ -15,9 +15,8 @@ class ApiController < ActionController::Base
         p params
         p "=================================================="
         
-        @cards = Card.all
-        @cards = @cards.where('card_type', params[:card_type]) if params[:card_type]
-        @cards = @cards.where('color', params[:color]) if params[:color]
+        @cards = Card.find_by_card_type(params[:card_type])
+     
         
         render json: {data: @cards}, status: 200  
     end
