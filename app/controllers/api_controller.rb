@@ -16,7 +16,7 @@ class ApiController < ActionController::Base
         p "=================================================="
         
         
-        @cards = Card.where(id: "1").to_a
+        @cards = Card.where(color: "青").to_a
         p "===================================================="
         p @cards
         p "=================================================="
