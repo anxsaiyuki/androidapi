@@ -16,7 +16,7 @@ class ApiController < ActionController::Base
         p "=================================================="
         
         @cards = Card.all
-        @cards = @cards.find_by_card_type("UNIT")
+        @cards = @cards.where("card_type" , "UNIT").to_a
         p "===================================================="
         p @cards
         p "=================================================="
