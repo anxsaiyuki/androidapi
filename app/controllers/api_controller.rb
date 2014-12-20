@@ -12,7 +12,7 @@ class ApiController < ActionController::Base
     def cardinfo
         p "===================================================="
         p params
-        p "===================================================="
+        p "=================我================================"
         
         @cards = Card.all
         @cards = @cards.where('card_type', params[:card_type].force_encoding(Encoding::UTF_8)) if params[:card_type]
