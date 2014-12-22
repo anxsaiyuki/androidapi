@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   
   post 'cardinfo/user/register', to: 'api#register', as: 'register'
     
+  post 'cardinfo/user/login', to: 'api#login', as: 'login'
+    
   # You can have the root of your site routed with "root"
   root 'api#index'
 
