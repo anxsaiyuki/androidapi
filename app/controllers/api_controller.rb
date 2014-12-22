@@ -21,6 +21,16 @@ class ApiController < ActionController::Base
         render json: {data: @cards.to_a}, status: 200  
     end
     
+    def login
+        user = User.find_by_user_name_and_password(params[:user_name],params[:password])
+        if user.nil?
+            render json: {message: 'failed'}, status: 200
+        else 
+            render json: {message: 'success'}, status: 200
+        end
+        
+    end
+    
     def register
         p "===================================="
         p params
@@ -30,9 +40,9 @@ class ApiController < ActionController::Base
         
         if user.nil?
             User.create(user_name: params[:user_name], password: params[:password])
-            render json: {message: 'successful'}, status: 200
+            render json: {message: 'success'}, status: 200
         else
-            render json: {message: 'not successful'}, status: 200
+            render json: {message: 'fail'}, status: 200
         end
         
         
