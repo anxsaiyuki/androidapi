@@ -53,7 +53,7 @@ class ApiController < ActionController::Base
             deck = DeckList.create(user_id: params[:user_id], card_id: params[:card_id], deck_name: params[:deck_name], card_quantity: params[:card_quantity])
             render json: {message: 'update'}, status: 200
         else
-            if cardtotal.card_type != "GENERATION" && cardtotal.card_quantity == 3
+            if params[:card_type] != "GENERATION" && cardtotal.card_quantity == 3
                 render json: {message: 'Card Quantity Pass Limit'}, status: 200
             else
                 newCardQuantity = params[:card_quantity] + cardtotal.card_quantity
