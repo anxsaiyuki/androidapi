@@ -48,7 +48,7 @@ class ApiController < ActionController::Base
     end
     
     def editdeck
-        if params[:user_id].nil? || params[:card_id].nil? || params[:deck_name].nil? || params[:card_quantity].nil? || params[:card_type].nil? || params[:action].nil?
+        if params[:user_id].nil? || params[:card_id].nil? || params[:deck_name].nil? || params[:card_quantity].nil? || params[:card_type].nil? || params[:action].nil? || params[:user_id].empty? || params[:card_id].empty? || params[:deck_name].empty? || params[:card_quantity].empty? || params[:card_type].empty? || params[:action].empty?
             render json: {message: 'error'}, status: 200
         else
             cardtotal = DeckList.find_by_user_id_and_card_id_and_deck_name(params[:user_id], params[:card_id], params[:deck_name])
