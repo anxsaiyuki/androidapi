@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     
   post 'cardinfo/editdeck', to: 'api#editdeck', as: 'editdeck'
     
+  post 'cardinfo/mydeck', to: 'api#getdeck', as: 'getdeck'
+    
   # You can have the root of your site routed with "root"
   root 'api#index'
 

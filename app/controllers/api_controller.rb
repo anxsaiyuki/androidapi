@@ -86,8 +86,14 @@ class ApiController < ActionController::Base
             else
                 render json: {message: 'You have passed Deck Limit'}, status: 200
             end
-        end
+        end    
+    end
+    
+    def getdeck
+        @deckName = DeckList.all
+        @deckName = @deckName.includes(:deck_name).where(user_id: params[:user_id])
         
-                    
+        render json: {data: @deckName.to_a}, status: 200
+        
     end
 end
