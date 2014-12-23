@@ -91,7 +91,7 @@ class ApiController < ActionController::Base
     
     def getdeck
         @deckName = DeckList.all
-        @deckName = @deckName.includes(:deck_name).where(user_id: params[:user_id])
+        @deckName = @deckName.where(user_id: params[:user_id])
         
         render json: {data: @deckName.to_a}, status: 200
         
