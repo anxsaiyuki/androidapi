@@ -54,7 +54,7 @@ class ApiController < ActionController::Base
         if params[:user_id].nil? || params[:card_id].nil? || params[:deck_name].nil? || params[:card_quantity].nil? || params[:card_type].nil? || params[:deck_action].nil? || params[:user_id].blank? || params[:card_id].blank? || params[:deck_name].blank? || params[:card_quantity].blank? || params[:card_type].blank? || params[:deck_action].blank?
             render json: {message: 'error'}, status: 200
         else
-            decktotal = DeckList.find_by_deck_name(params[:deck_name])
+            decktotal = DeckList.where(deck_name: params[:deck_name])
             totalquantity = 0
             decktotal.each do |quantity|
                 totalquantity = totalquantity + quantity.card_quantity
