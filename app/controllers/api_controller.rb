@@ -48,7 +48,7 @@ class ApiController < ActionController::Base
     end
     
     def editdeck
-        cardtotal = Decklist.find_by_user_id_and_card_id_and_deck_name(params[:user_id], params[:card_id], params[:deck_name])
+        cardtotal = DeckList.find_by_user_id_and_card_id_and_deck_name(params[:user_id], params[:card_id], params[:deck_name])
         if cardtotal.nil?
             deck = DeckList.create(user_id: params[:user_id], card_id: params[:card_id], deck_name: params[:deck_name], card_quantity: params[:card_quantity])
             render json: {message: 'update'}, status: 200
@@ -57,7 +57,7 @@ class ApiController < ActionController::Base
                 render json: {message: 'Card Quantity Pass Limit'}, status: 200
             else
                 newCardQuantity = params[:card_quantity] + cardtotal.card_quantity
-                Decklist.find(cardtotal.id).update_attributes(card_quantity: newCardQuantity)
+                DeckList.find(cardtotal.id).update_attributes(card_quantity: newCardQuantity)
                 render json: {message: 'update'}, status: 200
             end
         end
