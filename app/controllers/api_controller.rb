@@ -96,4 +96,9 @@ class ApiController < ActionController::Base
         render json: {data: @deckName.to_a}, status: 200
         
     end
+    
+    def createdeck
+        
+        
+    end
 end
