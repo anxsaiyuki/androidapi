@@ -75,6 +75,7 @@ class ApiController < ActionController::Base
                         DeckList.find(cardtotal.id).update_attributes(card_quantity: newCardQuantity)
                         render json: {message: 'update subtract'}, status: 200
                     end
+                end
             end
         end
                     
