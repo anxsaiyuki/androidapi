@@ -73,11 +73,10 @@ class ApiController < ActionController::Base
                     else
                         newCardQuantity = cardtotal.card_quantity.to_i - params[:card_quantity].to_i
                         DeckList.find(cardtotal.id).update_attributes(card_quantity: newCardQuantity)
-                        ccc
+                        render json: {message: 'update subtract'}, status: 200
                     end
                 end
             end
-            render json: {message: 'error'}, status: 200
         end
         
                     
