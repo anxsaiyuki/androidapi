@@ -48,6 +48,9 @@ class ApiController < ActionController::Base
     end
     
     def editdeck
+        p "===================================="
+        p params
+        p "===================================="
         if params[:user_id].nil? || params[:card_id].nil? || params[:deck_name].nil? || params[:card_quantity].nil? || params[:card_type].nil? || params[:action].nil? || params[:user_id].blank? || params[:card_id].blank? || params[:deck_name].blank? || params[:card_quantity].blank? || params[:card_type].blank? || params[:action].blank?
             render json: {message: 'error'}, status: 200
         else
