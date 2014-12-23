@@ -98,7 +98,8 @@ class ApiController < ActionController::Base
     end
     
     def createdeck
+        DeckName.create(user_id: params[:user_id], deck_name: params[:deck_name])
         
-        
+        render json: {message: 'You have created a Deck'}, status: 200
     end
 end
