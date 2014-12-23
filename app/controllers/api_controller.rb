@@ -98,8 +98,12 @@ class ApiController < ActionController::Base
     end
     
     def createdeck
-        DeckName.create(user_id: params[:user_id], Deck_Name: params[:deck_name])
-        
-        render json: {message: 'You have created a Deck'}, status: 200
+        checkDeck = DeckName.find_by_user_id_and_Deck_Name(params[:user_id], params[:deck_name])
+        if checkDeck.nil?
+            DeckName.create(user_id: params[:user_id], Deck_Name: params[:deck_name])
+            render json: {message: 'You have created a Deck'}, status: 200
+        else
+            render json: {message: 'Deck Already Exists'}, status: 200
+        end
     end
 end
