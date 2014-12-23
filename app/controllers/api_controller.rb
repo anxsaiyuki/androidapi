@@ -90,9 +90,9 @@ class ApiController < ActionController::Base
     end
     
     def getdeck
-        @deckName = DeckList.all
+        @deckName = DeckList.select("deck_name, user_id").uniq
         @deckName = @deckName.where(user_id: params[:user_id])
-        
+
         render json: {data: @deckName.to_a}, status: 200
         
     end
