@@ -48,17 +48,21 @@ class ApiController < ActionController::Base
     end
     
     def editdeck
-        cardtotal = DeckList.find_by_user_id_and_card_id_and_deck_name(params[:user_id], params[:card_id], params[:deck_name])
-        if cardtotal.nil?
-            deck = DeckList.create(user_id: params[:user_id], card_id: params[:card_id], deck_name: params[:deck_name], card_quantity: params[:card_quantity])
-            render json: {message: 'update'}, status: 200
+        if params[:user_id].nil? || params[:card_id].nil? || params[:deck_name].nil? || params[:card_quantity].nil? || params[:card_type].nil? || params[:action].nil?
+            render json: {message: 'error'}, status: 200
         else
-            if params[:card_type] != "GENERATION" && cardtotal.card_quantity == 3
-                render json: {message: 'Card Quantity Pass Limit'}, status: 200
-            else
-                newCardQuantity = params[:card_quantity].to_i + cardtotal.card_quantity.to_i
-                DeckList.find(cardtotal.id).update_attributes(card_quantity: newCardQuantity)
+            cardtotal = DeckList.find_by_user_id_and_card_id_and_deck_name(params[:user_id], params[:card_id], params[:deck_name])
+            if cardtotal.nil?
+                deck = DeckList.create(user_id: params[:user_id], card_id: params[:card_id], deck_name: params[:deck_name], card_quantity: params[:card_quantity])
                 render json: {message: 'update'}, status: 200
+            else
+                if params[:card_type] != "GENERATION" && cardtotal.card_quantity == 3
+                    render json: {message: 'Card Quantity Pass Limit'}, status: 200
+                else
+                    newCardQuantity = params[:card_quantity].to_i + cardtotal.card_quantity.to_i
+                    DeckList.find(cardtotal.id).update_attributes(card_quantity: newCardQuantity)
+                    render json: {message: 'update'}, status: 200
+                end
             end
         end
         
