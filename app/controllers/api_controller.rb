@@ -51,7 +51,7 @@ class ApiController < ActionController::Base
         p "===================================="
         p params
         p "===================================="
-        if params[:user_id].nil? || params[:card_id].nil? || params[:deck_name].nil? || params[:card_quantity].nil? || params[:card_type].nil? || params[:action].nil? || params[:user_id].blank? || params[:card_id].blank? || params[:deck_name].blank? || params[:card_quantity].blank? || params[:card_type].blank? || params[:action].blank?
+        if params[:user_id].nil? || params[:card_id].nil? || params[:deck_name].nil? || params[:card_quantity].nil? || params[:card_type].nil? || params[:deck_action].nil? || params[:user_id].blank? || params[:card_id].blank? || params[:deck_name].blank? || params[:card_quantity].blank? || params[:card_type].blank? || params[:deck_action].blank?
             render json: {message: 'error'}, status: 200
         else
             cardtotal = DeckList.find_by_user_id_and_card_id_and_deck_name(params[:user_id], params[:card_id], params[:deck_name])
@@ -59,12 +59,21 @@ class ApiController < ActionController::Base
                 deck = DeckList.create(user_id: params[:user_id], card_id: params[:card_id], deck_name: params[:deck_name], card_quantity: params[:card_quantity])
                 render json: {message: 'update'}, status: 200
             else
-                    if params[:card_type] != "GENERATION" && cardtotal.card_quantity == 3 && params[:action] = "add"
+                if params[:deck_action] = "add"
+                    if params[:card_type] != "GENERATION" && cardtotal.card_quantity == 3
                         render json: {message: 'Card Quantity Pass Limit'}, status: 200
                     else
                         newCardQuantity = params[:card_quantity].to_i + cardtotal.card_quantity.to_i
                         DeckList.find(cardtotal.id).update_attributes(card_quantity: newCardQuantity)
                         render json: {message: 'update add'}, status: 200
+                    end
+                elsif params[:deck_action] = "subtract"
+                    if cardtotal.card_quantity == 0
+                        render json: {message: 'Card Quantity Pass Cannot go Under 0'}, status: 200
+                    else
+                        newCardQuantity = cardtotal.card_quantity.to_i - params[:card_quantity].to_i
+                        DeckList.find(cardtotal.id).update_attributes(card_quantity: newCardQuantity)
+                        render json: {message: 'update subtract'}, status: 200
                     end
             end
         end
