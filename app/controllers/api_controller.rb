@@ -17,7 +17,7 @@ class ApiController < ActionController::Base
         @cards = @cards.where(g_sign: params[:g_sign]) if params[:g_sign]
         @cards = @cards.where(total_cost: params[:total_cost]) if params[:total_cost]
         @cards = @cards.where(roll_cost: params[:roll_cost]) if params[:roll_cost]
-        @cards = @cards.uniq_by(&:card_name)
+        @cards = @cards.uniq_by(:card_name)
         
         render json: {data: @cards.to_a}, status: 200  
     end
