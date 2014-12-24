@@ -109,7 +109,7 @@ class ApiController < ActionController::Base
     
     def decklist
         
-        @deckId = DeckList.joins(:cards)
+        @deckId = DeckList.select("*").joins(:cards)
         
         
         render json: {data: @deckId}, status: 200
