@@ -108,9 +108,9 @@ class ApiController < ActionController::Base
     end
     
     def decklist
-        deckListArray = Array.new
-        @deckId = DeckList.select("card_id").where(user_id: params[:user_id], deck_name: params[:deck_name]).to_a
-        @deckInfo = Card.where(card_id: deckListArray)
+        
+        @deckId = DeckList.joins(:cards).where(user_id: params[:user_id], deck_name: params[:deck_name]).to_a
+        
         
         render json: {data: @deckId}, status: 200
     end
