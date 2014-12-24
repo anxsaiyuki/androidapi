@@ -109,8 +109,8 @@ class ApiController < ActionController::Base
     
     def decklist
         
-        @deckId = DeckList.select("*").joins(:card).where(Deck_Name: params[:deck_name])
-        @dectId = @deckId.where(Deck_Name: "Unicorn")
+        @deckId = DeckList.select("*").joins(:card).where(Deck_Name: params[:deck_name], user_id: params[:user_id])
+
         
         
         render json: {data: @deckId}, status: 200
