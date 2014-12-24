@@ -109,7 +109,7 @@ class ApiController < ActionController::Base
     
     def decklist
         
-        @deckId = DeckList.select("*").joins(:card).where(Deck_Name: params[:deck_name], user_id: params[:user_id])
+        @deckId = DeckList.select("*").joins(:card).where(Deck_Name: params[:deck_name], user_id: params[:user_id]).order("card_type desc")
 
         
         
