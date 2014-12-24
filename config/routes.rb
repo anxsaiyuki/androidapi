@@ -13,6 +13,8 @@ Rails.application.routes.draw do
     
   post 'cardinfo/createdeck', to: 'api#createdeck', as: 'createdeck'
     
+  post 'cardinfo/decklist', to: 'api#decklist', as: 'decklist'
+    
   # You can have the root of your site routed with "root"
   root 'api#index'
 

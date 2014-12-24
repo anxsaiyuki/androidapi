@@ -106,4 +106,12 @@ class ApiController < ActionController::Base
             render json: {message: 'Deck Already Exists'}, status: 200
         end
     end
+    
+    def decklist
+        deckListArray = Array.new
+        deckId = DeckList.select("card_id").where(user_id: params[:user_id], deck_name: params[:deck_name]).to_a
+        @deckInfo = Card.where(card_id: deckListArray)
+        
+        render json: {data: @deckInfo.to_a}, status: 200
+    end
 end
