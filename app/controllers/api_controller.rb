@@ -17,7 +17,6 @@ class ApiController < ActionController::Base
         @cards = @cards.where(g_sign: params[:g_sign]) if params[:g_sign]
         @cards = @cards.where(total_cost: params[:total_cost]) if params[:total_cost]
         @cards = @cards.where(roll_cost: params[:roll_cost]) if params[:roll_cost]
-        @cards = @cards.uniq_by(:card_name)
         
         render json: {data: @cards.to_a}, status: 200  
     end
@@ -77,6 +76,10 @@ class ApiController < ActionController::Base
                     elsif params[:deck_action] == "subtract"
                         if cardtotal.card_quantity == 0
                             render json: {message: 'Card Quantity Pass Cannot go Under 0'}, status: 200
+                        elsif cardtotal.card_quantity == 1
+                            deckList = DeckList.find(cardtotal.id)
+                            deckList.destroy
+                            render json: {message: 'update subtract'}, status: 200
                         else
                             newCardQuantity = cardtotal.card_quantity.to_i - params[:card_quantity].to_i
                             DeckList.find(cardtotal.id).update_attributes(card_quantity: newCardQuantity)
@@ -111,7 +114,7 @@ class ApiController < ActionController::Base
     def decklist
         
         @deckId = DeckList.select("*").joins(:card).where(Deck_Name: params[:deck_name], user_id: params[:user_id]).order("card_type desc")
-
+        
         
         
         render json: {data: @deckId}, status: 200
