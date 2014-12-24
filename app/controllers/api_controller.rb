@@ -112,7 +112,8 @@ class ApiController < ActionController::Base
                 render json: {message: 'Deck Already Exists'}, status: 200
             end
         elsif params[:deck_action] == "delete"
-            checkDeck.destroy
+            deckName = DeckName.find(checkDeck.id)
+            deckName.destroy
             render json: {message: 'Deck Deleted'}, status: 200
         end
     end
