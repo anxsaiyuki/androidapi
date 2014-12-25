@@ -118,7 +118,14 @@ class ApiController < ActionController::Base
         elsif params[:deck_action] == "delete"
             deckName = DeckName.find(checkDeck.id)
             deckName.destroy
-            render json: {message: 'Deck Deleted'}, status: 200
+            
+            deckList = DeckList.find_by_user_id_and_Deck_Name(params[:user_id], params[:deck_name])
+            if deckList.nil?
+                render json: {message: 'Deck Deleted'}, status: 200
+            else
+                deckList.destroy
+                render json: {message: 'Deck Deleted'}, status: 200
+            end
         end
     end
     
