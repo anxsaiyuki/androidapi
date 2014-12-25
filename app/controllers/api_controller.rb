@@ -98,10 +98,17 @@ class ApiController < ActionController::Base
     end
     
     def getdeck
-        @deckName = DeckName.select("deck_name, user_id")
-        @deckName = @deckName.where(user_id: params[:user_id])
+        if params[:deck_action] == "own"
+            @deckName = DeckName.select("deck_name, user_id")
+            @deckName = @deckName.where(user_id: params[:user_id])
 
-        render json: {data: @deckName.to_a}, status: 200
+            render json: {data: @deckName.to_a}, status: 200
+        elsif params[:deck_action] == "share"
+            @deckName = DeckName.select("deck_name, user_id")
+            @deckName = @deckName.where(share_user_id: params[:user_id])
+            
+            render json: {data: @deckName.to_a}, status: 200
+        end
         
     end
     
@@ -138,8 +145,7 @@ class ApiController < ActionController::Base
         
         @deckId = DeckList.select("*").joins(:card).where(Deck_Name: params[:deck_name], user_id: params[:user_id]).order("card_type desc")
         
-        
-        
         render json: {data: @deckId}, status: 200
     end
+    
 end
