@@ -73,7 +73,9 @@ class ApiController < ActionController::Base
                             DeckList.find(cardtotal.id).update_attributes(card_quantity: newCardQuantity)
                             
                                 if params[:card_type] != "GRAPHIC"
-                                    render json: {message: 'add', quantity: @newCardQuantity, maxquantity: '3' }, status: 200
+                                    render json: {'message' => 'add', 
+                                                  'quantity' => @newCardQuantity
+                                                  'maxquantity' => '3' }, status: 200
                                 else
                                     render json: {message: 'add', quantity: @newCardQuantity, maxquantity: 'none' }, status: 200
                                 end
@@ -84,7 +86,7 @@ class ApiController < ActionController::Base
                         elsif cardtotal.card_quantity == 1
                             deckList = DeckList.find(cardtotal.id)
                             deckList.destroy
-                            render json: {message: 'update subtract', quantity: "0" }, status: 200
+                            render json: {message: 'subtract', quantity: "0" }, status: 200
                         else
                             newCardQuantity = cardtotal.card_quantity.to_i - params[:card_quantity].to_i
                             DeckList.find(cardtotal.id).update_attributes(card_quantity: newCardQuantity)
