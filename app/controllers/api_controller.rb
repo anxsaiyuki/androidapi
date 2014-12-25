@@ -119,7 +119,7 @@ class ApiController < ActionController::Base
             deckName = DeckName.find(checkDeck.id)
             deckName.destroy
             
-            @deckList = DeckList.where(user_id: params[:user_id], deck_name: params[:deck_name])
+            @deckList = DeckList.select("*").where(user_id: params[:user_id], deck_name: params[:deck_name])
             if @deckList.nil?
                 render json: {message: 'Deck Deleted'}, status: 200
             else
