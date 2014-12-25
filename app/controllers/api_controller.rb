@@ -105,7 +105,8 @@ class ApiController < ActionController::Base
             render json: {data: @deckName.to_a}, status: 200
         elsif params[:deck_action] == "share"
             @deckName = DeckName.select("deck_name, user_id")
-            @deckName = @deckName.where(share_user_id: 1).where_not(user_id: params[:user_id])
+            @deckName = @deckName.where(share_user_id: 1)
+            @deckName = @deckName.where_not(user_id: params[:user_id])
             
             render json: {data: @deckName.to_a}, status: 200
         end
