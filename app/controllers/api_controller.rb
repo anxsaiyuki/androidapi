@@ -128,7 +128,7 @@ class ApiController < ActionController::Base
             #        i.destroy
             #    end
                 render json: {message: 'Deck Deleted'}, status: 200
-            end
+            
         end
     end
     
