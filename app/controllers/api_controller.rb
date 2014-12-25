@@ -144,9 +144,10 @@ class ApiController < ActionController::Base
     def decklist
         if params[:deck_action] == "own"
             @deckId = DeckList.select("*").joins(:card).where(Deck_Name: params[:deck_name], user_id: params[:user_id]).order("card_type desc")
-        render json: {data: @deckId}, status: 200
+            render json: {data: @deckId}, status: 200
         elsif params[:deck_action] == "share"
             @deckId = DeckList.select("*").joins(:card,:deck_name).where(Deck_Name: params[:deck_name], share_user_id: params[:user_id]).order("card_type desc")
+            render json: {data: @deckId}, status: 200
         end
     end
     
