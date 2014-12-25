@@ -71,14 +71,9 @@ class ApiController < ActionController::Base
                         else
                             @newCardQuantity = params[:card_quantity].to_i + cardtotal.card_quantity.to_i
                             DeckList.find(cardtotal.id).update_attributes(card_quantity: newCardQuantity)
-                            
-                                if params[:card_type] != "GRAPHIC"
-                                    render json: {'message' => 'add', 
-                                                  'quantity' => @newCardQuantity
-                                                  'maxquantity' => '3' }, status: 200
-                                else
-                                    render json: {message: 'add', quantity: @newCardQuantity, maxquantity: 'none' }, status: 200
-                                end
+                               
+                            render json: {message: 'add'}, status: 200
+                                
                         end
                     elsif params[:deck_action] == "subtract"
                         if cardtotal.card_quantity == 0
@@ -90,12 +85,9 @@ class ApiController < ActionController::Base
                         else
                             newCardQuantity = cardtotal.card_quantity.to_i - params[:card_quantity].to_i
                             DeckList.find(cardtotal.id).update_attributes(card_quantity: newCardQuantity)
-                            @newQuantity = DeckList.select("card_quantiy").find(cardtotal.id)
-                                 if params[:card_type] != "GRAPHIC"
-                                    render json: {message: 'subtract'; quantity: @newQuantity; maxquantity: '3' }, status: 200
-                                else
-                                    render json: {message: 'subtract'; quantity: @newQuantity; maxquantity: 'none' }, status: 200
-                                end
+                            
+                            render json: {message: 'subtract'}, status: 200
+                            
                         end
                     end
                 end
