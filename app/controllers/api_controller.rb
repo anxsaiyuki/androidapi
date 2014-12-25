@@ -123,7 +123,7 @@ class ApiController < ActionController::Base
             if deckList.nil?
                 render json: {message: 'Deck Deleted'}, status: 200
             else
-                deckList.destroy
+                @deckList.destroy
                 render json: {message: @deckList}, status: 200
             end
         end
