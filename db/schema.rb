@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(version: 20141223163406) do
     t.integer  "status"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "share_user_id"
   end
 
   create_table "users", force: true do |t|
