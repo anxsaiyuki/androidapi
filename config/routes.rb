@@ -3,15 +3,11 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
   post 'cardinfo', to: 'api#cardinfo', as: 'cardinfo'
   
-  post 'cardinfo/user/register', to: 'api#register', as: 'register'
+  post 'cardinfo/user', to: 'api#user', as: 'user'
     
-  post 'cardinfo/user/login', to: 'api#login', as: 'login'
-    
-  post 'cardinfo/editdeck', to: 'api#editdeck', as: 'editdeck'
+  post 'cardinfo/deck', to: 'api#deck', as: 'deck'
     
   post 'cardinfo/mydeck', to: 'api#getdeck', as: 'getdeck'
-    
-  post 'cardinfo/createdeck', to: 'api#createdeck', as: 'createdeck'
     
   post 'cardinfo/decklist', to: 'api#decklist', as: 'decklist'
     
