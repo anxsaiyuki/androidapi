@@ -155,7 +155,7 @@ class ApiController < ActionController::Base
             elsif params[:deck_action] == "remove_share"
                 
             end
-        end 
+        
     end
     
 end
