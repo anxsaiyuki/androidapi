@@ -39,6 +39,10 @@ class ApiController < ActionController::Base
             else
                 render json: {message: 'Login Failed'}, status: 200
             end
+        elsif params[:user_action] == "list"
+            
+            @user = User.where.not(user_name: params[:user_id]
+            render json: {data: @user}, status: 200
         else
             render json: {message: 'select user action'}, status: 200
         end
@@ -124,7 +128,7 @@ class ApiController < ActionController::Base
     
     def getdeck
         if params[:deck_action] == "own"
-            @deckName = DeckName.select("deck_name, user_id")
+            @deckName = DeckName.select("id, deck_name, user_id")
             @deckName = @deckName.where(user_id: params[:user_id])
 
             render json: {data: @deckName.to_a}, status: 200
@@ -150,6 +154,7 @@ class ApiController < ActionController::Base
     
     def sharedeck
             share_user = User.find_by_user_name(params[:user_name])
+            
             if params[:deck_action] == "add_share"
                 ShareDeck.create(share_user_id: share_user.id, deck_name_id: params[:deck_id])
                 render json: {message: 'Good'}, status: 200
