@@ -11,6 +11,8 @@ Rails.application.routes.draw do
     
   post 'cardinfo/decklist', to: 'api#decklist', as: 'decklist'
     
+  post 'cardinfo/sharedeck', to: 'api#sharedeck', as: 'sharedeck'
+    
   # You can have the root of your site routed with "root"
   root 'api#index'
 
