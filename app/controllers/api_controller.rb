@@ -91,34 +91,35 @@ class ApiController < ActionController::Base
                 else
                     render json: {message: 'You have passed Deck Limit'}, status: 200
                 end
-            end    
-    elsif params[:deck_main_action] == "create_deck"
-        checkDeck = DeckName.find_by_user_id_and_Deck_Name(params[:user_id], params[:deck_name])
-        
-        if params[:deck_action] == "create"
-            if checkDeck.nil?
-                DeckName.create(user_id: params[:user_id], Deck_Name: params[:deck_name], status: 1)
-                render json: {message: 'You have created a Deck'}, status: 200
-            else
-                render json: {message: 'Deck Already Exists'}, status: 200
-            end
-        elsif params[:deck_action] == "delete"
-            deckName = DeckName.find(checkDeck.id)
-            deckName.destroy
-            
-            deckList = DeckList.find_by_user_id_and_deck_name(params[:user_id], params[:deck_name])
-            if deckList.nil?
-                render json: {message: 'Deck Deleted'}, status: 200
-            else
-                DeckList.destroy_all(:user_id => params[:user_id], :deck_name => params[:deck_name])
-            #    deckList.destroy
-            #    deckList.each do |i|
-            #        i.destroy
-            #    end
-                render json: {message: 'Deck Deleted'}, status: 200
-            end
-            
-        end
+			end
+		elsif params[:deck_main_action] == "create_deck"
+			checkDeck = DeckName.find_by_user_id_and_Deck_Name(params[:user_id], params[:deck_name])
+			
+			if params[:deck_action] == "create"
+				if checkDeck.nil?
+					DeckName.create(user_id: params[:user_id], Deck_Name: params[:deck_name], status: 1)
+					render json: {message: 'You have created a Deck'}, status: 200
+				else
+					render json: {message: 'Deck Already Exists'}, status: 200
+				end
+			elsif params[:deck_action] == "delete"
+				deckName = DeckName.find(checkDeck.id)
+				deckName.destroy
+				
+				deckList = DeckList.find_by_user_id_and_deck_name(params[:user_id], params[:deck_name])
+				if deckList.nil?
+					render json: {message: 'Deck Deleted'}, status: 200
+				else
+					DeckList.destroy_all(:user_id => params[:user_id], :deck_name => params[:deck_name])
+				#    deckList.destroy
+				#    deckList.each do |i|
+				#        i.destroy
+				#    end
+					render json: {message: 'Deck Deleted'}, status: 200
+				end
+				
+			end
+		end
     end
     
     def getdeck
