@@ -119,7 +119,7 @@ class ApiController < ActionController::Base
 				end
 				
 			end
-		end
+        end
     end
     
     def getdeck
@@ -146,6 +146,16 @@ class ApiController < ActionController::Base
             @deckId = DeckList.select("*").joins(:card).joins("LEFT JOIN deck_names ON deck_names.Deck_Name = deck_lists.deck_name and deck_names.user_id = deck_lists.user_id").joins("LEFT JOIN share_decks ON share_decks.deck_name_id = deck_names.id").where(Deck_Name: params[:deck_name], :share_decks => {:share_user_id => params[:user_id]}).order("card_type desc")
             render json: {data: @deckId}, status: 200
         end
+    end
+    
+    def sharedeck
+            share_user = User.find_by_user_named(params[:user_name])
+            if params[:deck_action] == "add_share"
+                ShareDeck.create(share_user_id: share_user.id, deck_name_id: params[:deck_id])
+            elsif params[:deck_action] == "remove_share"
+                
+            end
+        end 
     end
     
 end
