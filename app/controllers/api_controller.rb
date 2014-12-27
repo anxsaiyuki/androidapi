@@ -41,7 +41,7 @@ class ApiController < ActionController::Base
             end
         elsif params[:user_action] == "list"
             
-            @user = User.where.not(user_id: params[:user_id])
+            @user = User.where.not(id: params[:user_id])
             render json: {data: @user.to_a}, status: 200
         else
             render json: {message: 'select user action'}, status: 200
