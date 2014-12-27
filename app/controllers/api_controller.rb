@@ -149,7 +149,7 @@ class ApiController < ActionController::Base
     end
     
     def sharedeck
-            share_user = User.find_by_user_named(params[:user_name])
+            share_user = User.find_by_user_name(params[:user_name])
             if params[:deck_action] == "add_share"
                 ShareDeck.create(share_user_id: share_user.id, deck_name_id: params[:deck_id])
             elsif params[:deck_action] == "remove_share"
