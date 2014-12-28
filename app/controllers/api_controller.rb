@@ -134,7 +134,7 @@ class ApiController < ActionController::Base
     
     def getdeck
         if params[:deck_action] == "own"
-            @deckName = DeckName.select("id as deck_id, deck_name, user_id")
+            @deckName = DeckName.select("id, deck_name, user_id")
             @deckName = @deckName.where(user_id: params[:user_id])
 
             render json: {data: @deckName.to_a}, status: 200
