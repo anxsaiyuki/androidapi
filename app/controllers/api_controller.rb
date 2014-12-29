@@ -12,7 +12,7 @@ class ApiController < ActionController::Base
     
     def cardinfo        
         @cards = Card.all
-        @cards = @cards.where(color: params[:color]) if params[:color]
+        @cards = @cards.where(card_color: params[:card_color]) if params[:card_color]
         @cards = @cards.where(card_type: params[:card_type]) if params[:card_type]
         @cards = @cards.where(g_sign: params[:g_sign]) if params[:g_sign]
         @cards = @cards.where(total_cost: params[:total_cost]) if params[:total_cost]
