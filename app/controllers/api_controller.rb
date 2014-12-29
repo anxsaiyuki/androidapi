@@ -25,7 +25,9 @@ class ApiController < ActionController::Base
             
         elsif params[:card_action] == "list"
             @color = Card.select(:card_color).uniq
-            render json: {color: @color}, status: 200
+            @type = Card.select(:card_type).uniq
+            
+            render json: {color: @color, type: }, status: 200
         end
     end
     
