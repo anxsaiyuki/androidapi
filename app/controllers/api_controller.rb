@@ -33,7 +33,7 @@ class ApiController < ActionController::Base
             @pack_name = Card.select(:pack_name).uniq
             @rarity = Card.select(:rarity).uniq
             
-            render json: {color: @color, type: @type, g_sign: @g_sign, total_cost: @total_cost, roll_cost: @roll_cost, pack_name: @pack_name, rarity: @rarity}, status: 200
+            render json: {card_color: @color, card_type: @type, g_sign: @g_sign, total_cost: @total_cost, roll_cost: @roll_cost, pack_name: @pack_name, rarity: @rarity}, status: 200
         end
     end
     
