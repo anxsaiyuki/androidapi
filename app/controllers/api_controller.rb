@@ -19,6 +19,7 @@ class ApiController < ActionController::Base
             @cards = @cards.where(g_sign: params[:g_sign]) if params[:g_sign]
             @cards = @cards.where(total_cost: params[:total_cost]) if params[:total_cost]
             @cards = @cards.where(roll_cost: params[:roll_cost]) if params[:roll_cost]
+            @cards = @cards.where(pack_name: params[:pack_name]) if params[:pack_name]
             @cards = @cards.group("img_name")
 
             render json: {data: @cards.to_a}, status: 200  
@@ -26,8 +27,13 @@ class ApiController < ActionController::Base
         elsif params[:card_action] == "list"
             @color = Card.select(:card_color).uniq
             @type = Card.select(:card_type).uniq
+            @g_sign = Card.select(:g_sign).uniq
+            @total_cost = Card.select(:total_cost).uniq
+            @roll_cost = Card.select(:roll_cost).uniq
+            @pack_name = Card.select(:pack_name).uniq
+            @rarity = Card.select(:rarity).uniq
             
-            render json: {color: @color, type: @type}, status: 200
+            render json: {color: @color, type: @type, g_sign: @g_sign, total_cost: @total_cost, roll_cost: @roll_cost, pack_name: @pack_name, rarity: @rarity}, status: 200
         end
     end
     
