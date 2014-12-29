@@ -27,7 +27,7 @@ class ApiController < ActionController::Base
             @color = Card.select(:card_color).uniq
             @type = Card.select(:card_type).uniq
             
-            render json: {color: @color, type: }, status: 200
+            render json: {color: @color, type: @type}, status: 200
         end
     end
     
