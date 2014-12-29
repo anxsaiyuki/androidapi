@@ -58,7 +58,7 @@ class ApiController < ActionController::Base
     def deck
         if params[:deck_main_action] == "editdeck"
    
-            if params[:user_id].nil? || params[:card_id].nil? || params[:deck_name].nil? || params[:card_quantity].nil? || params[:card_type].nil? || params[:deck_action].nil? || params[:user_id].blank? || params[:card_id].blank? || params[:deck_name].blank? || params[:card_quantity].blank? || params[:card_type].blank? || params[:deck_action].blank?
+            if params[:user_id].nil? || params[:card_id].nil? || params[:deck_id].nil? || params[:card_quantity].nil? || params[:card_type].nil? || params[:deck_action].nil? || params[:user_id].blank? || params[:card_id].blank? || params[:deck_id].blank? || params[:card_quantity].blank? || params[:card_type].blank? || params[:deck_action].blank?
                 render json: {message: 'error'}, status: 200
             else
                 decktotal = DeckList.where(deck_name: params[:deck_name])
@@ -67,9 +67,9 @@ class ApiController < ActionController::Base
                     totalquantity = totalquantity + quantity.card_quantity
                 end
                 if totalquantity < 50
-                    cardtotal = DeckList.find_by_user_id_and_card_id_and_deck_name(params[:user_id], params[:card_id], params[:deck_name])
+                    cardtotal = DeckList.find_by_user_id_and_card_id_and_deck_id(params[:user_id], params[:card_id], params[:deck_id])
                     if cardtotal.nil? && params[:deck_action] == "add"
-                        deck = DeckList.create(user_id: params[:user_id], card_id: params[:card_id], deck_name: params[:deck_name], card_quantity: params[:card_quantity])
+                        deck = DeckList.create(user_id: params[:user_id], card_id: params[:card_id], deck_name_id: params[:deck_id], card_quantity: params[:card_quantity])
                         render json: {message: 'add'}, status: 200
                     else
                         if params[:deck_action] == "add"
