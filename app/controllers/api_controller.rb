@@ -11,15 +11,22 @@ class ApiController < ActionController::Base
     end
     
     def cardinfo        
-        @cards = Card.all
-        @cards = @cards.where(card_color: params[:card_color]) if params[:card_color]
-        @cards = @cards.where(card_type: params[:card_type]) if params[:card_type]
-        @cards = @cards.where(g_sign: params[:g_sign]) if params[:g_sign]
-        @cards = @cards.where(total_cost: params[:total_cost]) if params[:total_cost]
-        @cards = @cards.where(roll_cost: params[:roll_cost]) if params[:roll_cost]
-        @cards = @cards.group("img_name")
-        
-        render json: {data: @cards.to_a}, status: 200  
+        if params[:card_action] == "info"
+            
+            @cards = Card.all
+            @cards = @cards.where(card_color: params[:card_color]) if params[:card_color]
+            @cards = @cards.where(card_type: params[:card_type]) if params[:card_type]
+            @cards = @cards.where(g_sign: params[:g_sign]) if params[:g_sign]
+            @cards = @cards.where(total_cost: params[:total_cost]) if params[:total_cost]
+            @cards = @cards.where(roll_cost: params[:roll_cost]) if params[:roll_cost]
+            @cards = @cards.group("img_name")
+
+            render json: {data: @cards.to_a}, status: 200  
+            
+        elsif params[:card_action] == "list"
+            @color = Cards.select(:card_color).uniq
+            render json: {color: @color}, status: 200
+        end
     end
     
     def user
@@ -170,5 +177,6 @@ class ApiController < ActionController::Base
         
         
     end
+
     
 end
