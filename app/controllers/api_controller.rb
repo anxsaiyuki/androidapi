@@ -84,7 +84,7 @@ class ApiController < ActionController::Base
 
                             end
                         elsif params[:deck_action] == "subtract"
-                            if cardtotal.card_quantity == 0
+                            if cardtotal.nil?
                                 render json: {message: 'Card Quantity Pass Cannot go Under 0'}, status: 200
                             elsif cardtotal.card_quantity == 1
                                 deckList = DeckList.find(cardtotal.id)
