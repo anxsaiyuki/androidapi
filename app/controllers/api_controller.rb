@@ -24,7 +24,7 @@ class ApiController < ActionController::Base
             render json: {data: @cards.to_a}, status: 200  
             
         elsif params[:card_action] == "list"
-            @color = Cards.select(:card_color).uniq
+            @color = Card.select(:card_color).uniq
             render json: {color: @color}, status: 200
         end
     end
