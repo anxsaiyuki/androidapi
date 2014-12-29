@@ -34,7 +34,7 @@ class ApiController < ActionController::Base
             user = User.find_by_user_name(params[:user_name])
 
             if user.nil?
-                user = User.create(user_name: params[:user_name], user_ password: params[:password])
+                user = User.create(user_name: params[:user_name], user_password: params[:password])
                 render json: {message: 'Login Successful'}, status: 200
             else
                 render json: {message: 'Login Failed'}, status: 200
