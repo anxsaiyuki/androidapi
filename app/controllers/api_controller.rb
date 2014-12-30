@@ -23,7 +23,7 @@ class ApiController < ActionController::Base
                 @cards = @cards.where(pack_name: params[:pack_name]) if params[:pack_name]
                 @cards = @cards.group("img_name")
 
-                render json: {data: @apiCount.to_a}, status: 200 
+                render json: {data: @apiCount}, status: 200 
             
             
         elsif params[:card_action] == "list"
