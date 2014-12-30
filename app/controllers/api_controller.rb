@@ -14,9 +14,6 @@ class ApiController < ActionController::Base
         if params[:card_action] == "info"
             
             @apiCount = Card.count(:id)
-            if @apiCount == params[:count]
-                render json: {data: "none"}, status: 200 
-            else
                 @cards = Card.all
                 @cards = @cards.where(card_color: params[:card_color]) if params[:card_color]
                 @cards = @cards.where(card_type: params[:card_type]) if params[:card_type]
@@ -26,8 +23,8 @@ class ApiController < ActionController::Base
                 @cards = @cards.where(pack_name: params[:pack_name]) if params[:pack_name]
                 @cards = @cards.group("img_name")
 
-                render json: {data: @cards.to_a}, status: 200 
-            end
+                render json: {data: @apiCount.to_a}, status: 200 
+            
             
         elsif params[:card_action] == "list"
             @color = Card.select(:card_color).uniq
