@@ -13,8 +13,8 @@ class ApiController < ActionController::Base
     def cardinfo        
         if params[:card_action] == "info"
             
-            @apiCount.to_i = Card.count(:id).to_i
-            if @apiCount == params[:counter]
+            @apiCount = Card.count(:id)
+            if @apiCount.to_i == params[:counter].to_i
                 render json: {data: "none"}, status: 200 
             else
                 @cards = Card.all
