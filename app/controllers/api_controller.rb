@@ -17,7 +17,7 @@ class ApiController < ActionController::Base
             if @apiCount.to_i == params[:counter].to_i
                 p "============================"
                 p "good"
-                render json: {data: "none"}, status: 200 
+                render json: {data: 'none'}, status: 200 
             else
                 
                 @cards = Card.where("id > ?", params[:counter])
@@ -27,8 +27,9 @@ class ApiController < ActionController::Base
                 @cards = @cards.where(total_cost: params[:total_cost]) if params[:total_cost]
                 @cards = @cards.where(roll_cost: params[:roll_cost]) if params[:roll_cost]
                 @cards = @cards.where(pack_name: params[:pack_name]) if params[:pack_name]
-            
-                render json: {data: @cards}, status: 200 
+                
+                @total_count = @apiCount.to_i - params[:counter].to_i
+                render json: {data: @cards, total_count: @total_count }, status: 200 
             end
             
         elsif params[:card_action] == "list"
