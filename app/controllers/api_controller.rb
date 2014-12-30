@@ -25,7 +25,6 @@ class ApiController < ActionController::Base
                 @cards = @cards.where(total_cost: params[:total_cost]) if params[:total_cost]
                 @cards = @cards.where(roll_cost: params[:roll_cost]) if params[:roll_cost]
                 @cards = @cards.where(pack_name: params[:pack_name]) if params[:pack_name]
-                @cards = @cards.group("img_name")
             
                 render json: {data: @cards}, status: 200 
             end
