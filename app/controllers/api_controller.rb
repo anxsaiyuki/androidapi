@@ -15,6 +15,8 @@ class ApiController < ActionController::Base
             
             @apiCount = Card.count(:id)
             if @apiCount.to_i == params[:counter].to_i
+                p "============================"
+                p "good"
                 render json: {data: "none"}, status: 200 
             else
                 
