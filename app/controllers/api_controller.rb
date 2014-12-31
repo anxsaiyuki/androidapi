@@ -42,7 +42,7 @@ class ApiController < ActionController::Base
             
             render json: {card_color: @color, card_type: @type, g_sign: @g_sign, total_cost: @total_cost, roll_cost: @roll_cost, pack_name: @pack_name, rarity: @rarity}, status: 200
         elsif params[:card_action] == "pack_list"
-            @apiCount = Card.count(:id)
+            @apiCount = PackName.count(:id)
             if @apiCount.to_i == params[:counter].to_i
                 p "============================"
                 p "good"
