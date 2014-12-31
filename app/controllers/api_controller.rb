@@ -39,9 +39,19 @@ class ApiController < ActionController::Base
             @total_cost = Card.select(:total_cost).uniq
             @roll_cost = Card.select(:roll_cost).uniq
             @pack_name = Card.select(:pack_name).uniq
-            @rarity = Card.select(:rarity).uniq
             
             render json: {card_color: @color, card_type: @type, g_sign: @g_sign, total_cost: @total_cost, roll_cost: @roll_cost, pack_name: @pack_name, rarity: @rarity}, status: 200
+        elsif params[:card_action] == "pack_list"
+            @apiCount = Card.count(:id)
+            if @apiCount.to_i == params[:counter].to_i
+                p "============================"
+                p "good"
+                render json: {data: 'none', total_count: '0'}, status: 200 
+            else
+                @pack_name = PackName.where("id > ?", params[:counter])
+                @total_count = @apiCount.to_i - params[:counter].to_i
+                render json: {data: @pack_name, total_count: @total_count}, status: 200
+            end
         end
     end
     
