@@ -74,11 +74,17 @@ class ApiController < ActionController::Base
                 render json: {message: 'Login Failed'}, status: 200
             end
             
-        elsif params[:user_action] == "share"
+        elsif params[:user_action] == "shared"
             
             @user_share = ShareDeck.select("users.id, users.user_name").joins("LEFT JOIN deck_names ON deck_names.id = share_decks.deck_name_id").joins("LEFT JOIN users ON users.id = share_decks.share_user_id").where(:deck_names => {:user_id => params[:user_id]}).where(:share_decks => {:deck_name_id => params[:deck_id]})
             render json: {data: @user_share.to_a}, status: 200
             
+        elsif params[:user_action] == "share_list"
+            
+            @user_share_list = FriendList.select("users.id, users.user_name").joins("LEFT JOIN users ON users.id = friend_lists.friend_id").joins("LEFT JOIN share_decks ON share_decks.share_user_id = friend_lists.friend_id and share_decks.deck_name_id = " + params[:deck_id]).where(user_id: params[:user_id], status: 2).where("share_decks.id is NULL")
+            
+            render json: {data: @user_share_list.to_a}, status: 200
+
         else
             render json: {message: 'select user action'}, status: 200
         end
