@@ -76,7 +76,7 @@ class ApiController < ActionController::Base
             
         elsif params[:user_action] == "share"
             
-            @user_share = ShareDeck.select("*").joins("LEFT JOIN deck_names ON deck_names.id = share_decks.deck_name_id").joins("LEFT JOIN users ON users.id = deck_names.user_id").where(:deck_names => {:user_id => params[:user_id]})
+            @user_share = ShareDeck.select("users.id, users.user_name").joins("LEFT JOIN deck_names ON deck_names.id = share_decks.deck_name_id").joins("LEFT JOIN users ON users.id = share_decks.share_user_id").where(:deck_names => {:user_id => params[:user_id]}).where(:share_decks => {:deck_name_id => params[:deck_id]})
             render json: {data: @user_share.to_a}, status: 200
             
         else
