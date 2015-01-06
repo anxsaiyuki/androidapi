@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   post 'cardinfo', to: 'api#cardinfo', as: 'cardinfo'
   
   post 'cardinfo/user', to: 'api#user', as: 'user'
+
+  post 'cardinfo/friend', to: 'api#friend', as: 'friend'
     
   post 'cardinfo/deck', to: 'api#deck', as: 'deck'
     
