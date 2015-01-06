@@ -87,7 +87,7 @@ class ApiController < ActionController::Base
     
     def friend
             if params[:friend_action] == "friend_list"
-                @friend = FriendList.select("users.id, users.user_name").joins("LEFT JOIN users ON users.id = friend_lists.friend_id").where(:friend_lists => {user_id: params[:user_id]}, :friend_lists => {status: 2})
+                @friend = FriendList.select("users.id, users.user_name").joins("LEFT JOIN users ON users.id = friend_lists.friend_id").where(user_id: params[:user_id], :friend_lists => {status: 2})
                 render json: {data: @friend}, status: 200
             elsif params[:friend_action] == "request_list"
                 
@@ -109,11 +109,8 @@ class ApiController < ActionController::Base
                 
             elsif params[:friend_action] == "accept"
                 
-                @test = FriendList.find_by_user_id_and_friend_id_and_status(params[:user_id], params[:friend_id], 1)
-                p "====================="
-                p @test
-                p "====================="
-                @test = @test.update_attributes(status: 2)
+                @friend = FriendList.find_by_user_id_and_friend_id_and_status(params[:user_id], params[:friend_id], 1)
+                @friend = @friend.update_attributes(status: 2)
                 render json: {message: "Friend Accepted"}, status: 200
             
             end
