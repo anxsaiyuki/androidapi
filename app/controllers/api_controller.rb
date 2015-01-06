@@ -93,6 +93,10 @@ class ApiController < ActionController::Base
                 
                 @friend = User.select("users.id, users.user_name, friend_lists.friend_id").joins("LEFT JOIN friend_lists ON friend_lists.friend_id = users.id").where.not(:users => {id: params[:user_id]}).where("friend_lists.friend_id is null")
                 render json: {data: @friend}, status: 200
+            elsif params[:friend_action] == "accept_list"
+                
+                @friend = User.select("users.id, users.user_name, friend_lists.friend_id").joins("LEFT JOIN friend_lists ON friend_lists.friend_id = users.id").where(:friend_lists => {user_id: params[:user_id]}).where(:friend_lists => {status: 1})
+                render json: {data: @friend}, status: 200
                
             elsif params[:friend_action] == "request"
                 @friend_check = FriendList.find_by_user_id_and_friend_id_and_status(params[:user_id],params[:friend_id], 1)
@@ -100,7 +104,7 @@ class ApiController < ActionController::Base
                     @friend = FriendList.create(user_id: params[:user_id], friend_id: params[:friend_id], status: 1)
                     render json: {message: "Friend Request Sent"}, status: 200
                 else
-                    render json: {message: "Request Already Sent    "}, status: 200
+                    render json: {message: "Request Already Sent"}, status: 200
                 end
                 
             elsif params[:friend_action] == "accept"
