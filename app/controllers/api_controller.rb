@@ -86,16 +86,18 @@ class ApiController < ActionController::Base
     end
     
     def friend
-        
-            if params[:friend_action] == "list"
-                
-                @user = User.where.not(id: params[:user_id])
+            if params[:friend_action] == "friend_list"
+                @friend = FriendList.select("users.user_name").find_by_user_id_and_status(user_id: params[:user_id], 2).joins("LEFT JOIN users ON users.id = friend_lists.user_id")
                 render json: {data: @user.to_a}, status: 200
+            elsif params[:friend_action] == "request_list"
+                
+                @friend = User.where.not(id: params[:user_id])
+                render json: {data: @friend.to_a}, status: 200
                
             elsif params[:friend_action] == "request"
-                @user_check = FriendList.find_by_user_id_and_friend_id_and_status(params[:user_id],params[:friend_id], 1)
-                if @user_check.nil?
-                    @user = FriendList.create(user_id: params[:user_id], friend_id: params[:friend_id], status: 1)
+                @friend_check = FriendList.find_by_user_id_and_friend_id_and_status(params[:user_id],params[:friend_id], 1)
+                if @friend_check.nil?
+                    @friend = FriendList.create(user_id: params[:user_id], friend_id: params[:friend_id], status: 1)
                     render json: {message: "Friend Request Sent"}, status: 200
                 else
                     render json: {message: "Request Already Sent    "}, status: 200
