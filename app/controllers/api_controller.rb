@@ -87,7 +87,7 @@ class ApiController < ActionController::Base
     
     def friend
             if params[:friend_action] == "friend_list"
-                @friend = FriendList.select("users.user_name").joins("LEFT JOIN users ON users.id = friend_lists.user_id").where(:friend_list => {user_id: params[:user_id]}, :friend_list => {status: 2})
+                @friend = FriendList.select("users.user_name").joins("LEFT JOIN users ON users.id = friend_lists.user_id").where(:friend_lists => {user_id: params[:user_id]}, :friend_lists => {status: 2})
                 render json: {data: @friend}, status: 200
             elsif params[:friend_action] == "request_list"
                 
