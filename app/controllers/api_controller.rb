@@ -92,14 +92,21 @@ class ApiController < ActionController::Base
                 @user = User.where.not(id: params[:user_id])
                 render json: {data: @user.to_a}, status: 200
                
-            elsif params[:friend_action] == "add"
+            elsif params[:friend_action] == "request"
                 @user_check = FriendList.find_by_user_id_and_friend_id_and_status(params[:user_id],params[:friend_id], 1)
                 if @user_check.nil?
                     @user = FriendList.create(user_id: params[:user_id], friend_id: params[:friend_id], status: 1)
-                    render json: {message: "good"}, status: 200
+                    render json: {message: "Friend Request Sent"}, status: 200
                 else
-                    render json: {message: "bad"}, status: 200
+                    render json: {message: "Request Already Sent"}, status: 200
                 end
+                
+            elsif params[:friend_action] == "accept"
+                
+                FriendList.find_by_user_id_and_friend_id_and status(params[:user_id], params[:friend_id], 1).update_attributes(status: 2)
+                
+                render json: {message: "Friend Accepted"}, status: 200
+            end
             end
     
     end
