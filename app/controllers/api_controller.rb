@@ -109,8 +109,11 @@ class ApiController < ActionController::Base
                 
             elsif params[:friend_action] == "accept"
                 
-                FriendList.find_by_user_id_and_friend_id_and_status(params[:user_id], params[:friend_id], 1).update_attributes(status: 2)
-                
+                @test = FriendList.find_by_user_id_and_friend_id_and_status(params[:user_id], params[:friend_id], 1)
+                p "====================="
+                p @test
+                p "====================="
+                @test = @test.update_attributes(status: 2)
                 render json: {message: "Friend Accepted"}, status: 200
             
             end
