@@ -214,7 +214,7 @@ class ApiController < ActionController::Base
             @deckId = DeckList.select("*").joins(:card).where(deck_name_id: params[:deck_id], user_id: params[:user_id]).order("card_type desc")
             render json: {data: @deckId}, status: 200
         elsif params[:deck_action] == "share"
-            @deckId = DeckList.select("*").joins(:card).joins("LEFT JOIN deck_names ON deck_names.id = deck_lists.deck_name_id and deck_names.user_id = deck_lists.user_id").joins("LEFT JOIN share_decks ON share_decks.deck_name_id = deck_names.id").where(deck_name_id: params[:deck_name], :share_decks => {:share_user_id => params[:user_id]}).order("card_type desc")
+            @deckId = DeckList.select("*").joins(:card).joins("LEFT JOIN deck_names ON deck_names.id = deck_lists.deck_name_id and deck_names.user_id = deck_lists.user_id").joins("LEFT JOIN share_decks ON share_decks.deck_name_id = deck_names.id").where(deck_name_id: params[:deck_id], :share_decks => {:share_user_id => params[:user_id]}).order("card_type desc")
             render json: {data: @deckId}, status: 200
         end
     end
