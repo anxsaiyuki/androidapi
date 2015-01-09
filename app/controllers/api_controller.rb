@@ -226,10 +226,12 @@ class ApiController < ActionController::Base
     end
     
     def sharedeck
-            test = params[:share_user_id_list].split(",")
-            p test
+            share_list = params[:share_user_id_list].split(",")
+            p share_list
             if params[:deck_action] == "add_share"
-                ShareDeck.create(user_id: params[:user_id], share_user_id: share_user.id, deck_name_id: params[:deck_id])
+                share_list.each do |shareList|
+                    ShareDeck.create(user_id: params[:user_id], share_user_id: shareList, deck_name_id: params[:deck_id])
+                end
                 render json: {message: 'Good'}, status: 200
             elsif params[:deck_action] == "remove_share"
                 
