@@ -207,7 +207,7 @@ class ApiController < ActionController::Base
 
             render json: {data: @deckName.to_a}, status: 200
         elsif params[:deck_action] == "share"
-            @deckName = ShareDeck.joins("LEFT JOIN deck_names ON deck_names.id = share_decks.deck_name_id").select("share_decks.id", "share_decks.user_id", "share_decks.share_user_id", "deck_names.deck_name", "deck_names.id as deck_id").where(share_user_id: params[:user_id])
+            @deckName = ShareDeck.joins("LEFT JOIN deck_names ON deck_names.id = share_decks.deck_name_id").joins("LEFT JOIN users ON users.id = share_decks.user_id").select("share_decks.id", "users.user_name", "share_decks.user_id", "share_decks.share_user_id", "deck_names.deck_name", "deck_names.id as deck_id").where(share_user_id: params[:user_id])
             
             render json: {data: @deckName.to_a}, status: 200
         end
@@ -232,7 +232,7 @@ class ApiController < ActionController::Base
                 share_list.each do |shareList|
                     ShareDeck.create(user_id: params[:user_id], share_user_id: shareList, deck_name_id: params[:deck_id])
                 end
-                render json: {message: 'Good'}, status: 200
+                render json: {message: 'You have shared your deck'}, status: 200
             elsif params[:share_action] == "remove_share"
                 
             end
