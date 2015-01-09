@@ -226,8 +226,8 @@ class ApiController < ActionController::Base
     end
     
     def sharedeck
-            share_user = User.find_by_user_name(params[:user_name])
-            
+            test = params[:share_user_id_list].split(",")
+            p test
             if params[:deck_action] == "add_share"
                 ShareDeck.create(share_user_id: share_user.id, deck_name_id: params[:deck_id])
                 render json: {message: 'Good'}, status: 200
