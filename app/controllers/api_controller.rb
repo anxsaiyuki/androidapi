@@ -97,7 +97,7 @@ class ApiController < ActionController::Base
                 render json: {data: @friend}, status: 200
             elsif params[:friend_action] == "request_list"
                 
-                @friend = User.select("users.id, users.user_name, friend_lists.friend_id").joins("LEFT JOIN friend_lists ON friend_lists.friend_id = users.id").where.not(:users => {id: params[:user_id]}).where.not(:friend_lists => {user_id: params[:user_id]}).uniq
+                @friend = User.select("users.id, users.user_name, friend_lists.friend_id").joins("LEFT JOIN friend_lists ON friend_lists.friend_id = users.id").where.not(:users => {id: params[:user_id]}).where("friend_lists.user_id != " + params[:user_id] + " or friend_lists.user_id is null").uniq
                 render json: {data: @friend}, status: 200
             elsif params[:friend_action] == "accept_list"
                 
@@ -115,8 +115,9 @@ class ApiController < ActionController::Base
                 
             elsif params[:friend_action] == "accept"
                 
-                @friend = FriendList.find_by_user_id_and_friend_id_and_status(params[:user_id], params[:friend_id], 1)
-                @friend = @friend.update_attributes(status: 2)
+                @user_friend = FriendList.find_by_user_id_and_friend_id_and_status(params[:user_id], params[:friend_id], 1)
+                @user_friend = @friend.update_attributes(status: 2)
+                @friend_user = FriendList.create(user_id: params[:friend_id], friend_id: params[:user_id], status: 2)
                 render json: {message: "Friend Accepted"}, status: 200
             
             end
