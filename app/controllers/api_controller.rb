@@ -97,7 +97,7 @@ class ApiController < ActionController::Base
                 render json: {data: @friend}, status: 200
             elsif params[:friend_action] == "request_list"
                 
-                @friend = User.select("users.id, users.user_name, friend_lists.friend_id").joins("LEFT JOIN friend_lists ON friend_lists.friend_id = users.id").where.not(:users => {id: params[:user_id]}).where("(friend_lists.friend_id != " + params[:user_id] + " AND friend_lists.user_id != " + params[:user_id] + ") OR friend_lists.user_id is null").uniq
+                @friend = User.select("users.id, users.user_name, friend_lists.friend_id").joins("LEFT JOIN friend_lists ON (friend_lists.user_id = users.id or friend_lists.friend_id = users.id)").where.not(:users => {id: params[:user_id]}).where("(friend_lists.friend_id != " + params[:user_id] + " AND friend_lists.user_id != " + params[:user_id] + ") OR friend_lists.user_id is null").uniq
                 render json: {data: @friend}, status: 200
             elsif params[:friend_action] == "accept_list"
                 
