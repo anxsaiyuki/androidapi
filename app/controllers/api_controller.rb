@@ -177,9 +177,11 @@ class ApiController < ActionController::Base
 			if params[:deck_action] == "create"
 				if checkDeck.nil?
 					DeckName.create(user_id: params[:user_id], deck_name: params[:deck_name], status: 1)
-					render json: {message: 'You have created a Deck'}, status: 200
+					render json: {message: '1'}, status: 200
+                    #1 Create Successful
 				else
-					render json: {message: 'Deck Already Exists'}, status: 200
+					render json: {message: '2'}, status: 200
+                    #2 Deck already exist
 				end
 			elsif params[:deck_action] == "delete"
 				deckName = DeckName.find(checkDeck.id)
