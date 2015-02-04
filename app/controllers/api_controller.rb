@@ -143,17 +143,20 @@ class ApiController < ActionController::Base
                     else
                         if params[:deck_action] == "add"
                             if params[:card_type] != "GRAPHIC" && cardtotal.card_quantity >= 3
-                                render json: {message: 'Card Quantity Pass Limit'}, status: 200
+                                render json: {message: '3'}, status: 200
+                                # past Card Quantity 3
                             else
                                 newCardQuantity = params[:card_quantity].to_i + cardtotal.card_quantity.to_i
                                 DeckList.find(cardtotal.id).update_attributes(card_quantity: newCardQuantity)
 
-                                render json: {message: 'add'}, status: 200
+                                render json: {message: '1'}, status: 200
+                                # add 1
 
                             end
                         elsif params[:deck_action] == "subtract"
                             if cardtotal.nil?
-                                render json: {message: 'Card Quantity Pass Cannot go Under 0'}, status: 200
+                                render json: {message: '4'}, status: 200
+                                # go under 0 4
                             elsif cardtotal.card_quantity == 1
                                 deckList = DeckList.find(cardtotal.id)
                                 deckList.destroy
@@ -162,7 +165,8 @@ class ApiController < ActionController::Base
                                 newCardQuantity = cardtotal.card_quantity.to_i - params[:card_quantity].to_i
                                 DeckList.find(cardtotal.id).update_attributes(card_quantity: newCardQuantity)
 
-                                render json: {message: 'subtract'}, status: 200
+                                render json: {message: '2'}, status: 200
+                                # add 2
 
                             end
                         end
@@ -189,14 +193,14 @@ class ApiController < ActionController::Base
 				
 				deckList = DeckList.find_by_user_id_and_deck_name_id(params[:user_id], checkDeck.id)
 				if deckList.nil?
-					render json: {message: 'Deck Deleted'}, status: 200
+					render json: {message: '1'}, status: 200
 				else
 					DeckList.destroy_all(:user_id => params[:user_id], :deck_id => checkDeck.id)
 				#    deckList.destroy
 				#    deckList.each do |i|
 				#        i.destroy
 				#    end
-					render json: {message: 'Deck Deleted'}, status: 200
+					render json: {message: '1'}, status: 200
 				end
 				
 			end
