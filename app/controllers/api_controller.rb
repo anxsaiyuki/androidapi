@@ -160,7 +160,7 @@ class ApiController < ActionController::Base
                             elsif cardtotal.card_quantity == 1
                                 deckList = DeckList.find(cardtotal.id)
                                 deckList.destroy
-                                render json: {message: 'subtract', quantity: "0" }, status: 200
+                                render json: {message: '2', quantity: "0" }, status: 200
                             else
                                 newCardQuantity = cardtotal.card_quantity.to_i - params[:card_quantity].to_i
                                 DeckList.find(cardtotal.id).update_attributes(card_quantity: newCardQuantity)
