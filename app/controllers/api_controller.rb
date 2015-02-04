@@ -139,7 +139,7 @@ class ApiController < ActionController::Base
                     cardtotal = DeckList.find_by_user_id_and_card_id_and_deck_name_id(params[:user_id], params[:card_id], params[:deck_id])
                     if cardtotal.nil? && params[:deck_action] == "add"
                         deck = DeckList.create(user_id: params[:user_id], card_id: params[:card_id], deck_name_id: params[:deck_id], card_quantity: params[:card_quantity])
-                        render json: {message: 'add'}, status: 200
+                        render json: {message: '1'}, status: 200
                     else
                         if params[:deck_action] == "add"
                             if params[:card_type] != "GRAPHIC" && cardtotal.card_quantity >= 3
@@ -172,7 +172,7 @@ class ApiController < ActionController::Base
                         end
                     end
                 else
-                    render json: {message: 'You have passed Deck Limit'}, status: 200
+                    render json: {message: '5'}, status: 200
                 end
 			end
 		elsif params[:deck_main_action] == "create_deck"
