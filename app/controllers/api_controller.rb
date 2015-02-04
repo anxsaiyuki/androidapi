@@ -59,9 +59,9 @@ class ApiController < ActionController::Base
         if params[:user_action] == "login"
             user = User.find_by_user_name_and_user_password(params[:user_name],params[:password])
             if user.nil?
-                render json: {message: 'Login Failed'}, status: 200
+                render json: {message: '0'}, status: 200
             else 
-                render json: {message: 'Login Successful', user_id: user.id}, status: 200
+                render json: {message: '1', user_id: user.id}, status: 200
             end
         
         elsif params[:user_action] == "register"
@@ -69,9 +69,9 @@ class ApiController < ActionController::Base
 
             if user.nil?
                 user = User.create(user_name: params[:user_name], user_password: params[:password])
-                render json: {message: 'Login Successful'}, status: 200
+                render json: {message: '1'}, status: 200
             else
-                render json: {message: 'Login Failed'}, status: 200
+                render json: {message: '0'}, status: 200
             end
             
         elsif params[:user_action] == "shared"
