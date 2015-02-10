@@ -249,7 +249,7 @@ class ApiController < ActionController::Base
     
     def deckcomment
         if params[:deck_comment_action] == "create"
-            @deckComment = DeckComment.create(deck_id: params[:deck_id], user_id: params[:user_id], comment: params[:deck_comment], priority: 0)
+            @deckComment = DeckComment.create(deck_id: params[:deck_id], user_id: params[:user_id], comment: params[:deck_comment].to_s, priority: 0)
             render json: {message: '1'}, status: 200
         
         elsif params[:deck_comment_action] == "get"
