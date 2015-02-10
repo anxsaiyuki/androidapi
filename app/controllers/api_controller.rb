@@ -255,7 +255,7 @@ class ApiController < ActionController::Base
         elsif params[:deck_comment_action] == "get"
             @deckComment = DeckComment.select("users.user_name, deck_comments.comment, deck_comments.priority").joins("LEFT JOIN users ON users.id = deck_comments.user_id").where(:deck_comments => {:deck_id => params[:deck_id]})
             
-            render json: {message: '1'}, status: 200
+            render json: {data: @deckComment}, status: 200
         end
     end
 
