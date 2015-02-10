@@ -246,6 +246,18 @@ class ApiController < ActionController::Base
         
         
     end
+    
+    def deckcomment
+        if params[:deck_comment_action] == "create"
+            @deckComment = DeckComment.create(deck_id: params[:deck_id], user_id: params[:user_id], comment: params[:deck_comment], priority: 0)
+            render json: {message: '1'}, status: 200
+        
+        elsif params[:deck_comment_action] == "get"
+            @deckComment = DeckComment.select("users.user_name, deck_comments.comment, deck_comments.priority").joins("LEFT JOIN users ON users.id = deck_comments.user_id").where(:deck_comments => {:deck_id => params[:deck_id]})
+            
+            render json: {message: '1'}, status: 200
+        end
+    end
 
     
 end
