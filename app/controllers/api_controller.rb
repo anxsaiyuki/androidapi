@@ -180,7 +180,7 @@ class ApiController < ActionController::Base
 			
 			if params[:deck_action] == "create"
 				if checkDeck.nil?
-					DeckName.create(user_id: params[:user_id], deck_name: params[:deck_name], status: 1)
+					DeckName.create(user_id: params[:user_id], deck_name: params[:deck_name], deck_summary: params[:deck_summary], status: 1)
 					render json: {message: '1'}, status: 200
                     #1 Create Successful
 				else
