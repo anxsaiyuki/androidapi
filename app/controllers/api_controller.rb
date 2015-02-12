@@ -217,6 +217,11 @@ class ApiController < ActionController::Base
             @deckName = ShareDeck.joins("LEFT JOIN deck_names ON deck_names.id = share_decks.deck_name_id").joins("LEFT JOIN users ON users.id = share_decks.user_id").select("share_decks.id", "users.user_name", "share_decks.user_id", "share_decks.share_user_id", "deck_names.deck_name", "deck_names.id as deck_id").where(share_user_id: params[:user_id])
             
             render json: {data: @deckName.to_a}, status: 200
+        elsif params[:deck_action] == "share"
+            @deckName = DeckName.select("id, deck_name, deck_summary, user_id")
+            @deckName = @deckName.where(public_status: 1)
+            
+            render json: {data: @deckName.to_a}, status: 200
         end
         
     end
@@ -231,7 +236,7 @@ class ApiController < ActionController::Base
             render json: {data: @deckId}, status: 200
             
         elsif params[:deck_action] == "public"
-            @deckId = DeckList.select("cards.* , deck_lists.card_quantity").joins(:card).joins("LEFT JOIN deck_names ON deck_names.id = deck_lists.deck_name_id and deck_names.user_id = deck_lists.user_id").where(:deck_names => {:public_status => 1}).order("card_type desc")
+            @deckId = DeckList.select("cards.* , deck_lists.card_quantity").joins(:card).joins("LEFT JOIN deck_names ON deck_names.id = deck_lists.deck_name_id and deck_names.user_id = deck_lists.user_id").where(deck_name_id: params[:deck_id]).order("card_type desc")
             render json: {data: @deckId}, status: 200
         end
     end
