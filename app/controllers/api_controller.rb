@@ -217,7 +217,7 @@ class ApiController < ActionController::Base
             @deckName = ShareDeck.joins("LEFT JOIN deck_names ON deck_names.id = share_decks.deck_name_id").joins("LEFT JOIN users ON users.id = share_decks.user_id").select("share_decks.id", "users.user_name", "share_decks.user_id", "share_decks.share_user_id", "deck_names.deck_name", "deck_names.id as deck_id").where(share_user_id: params[:user_id])
             
             render json: {data: @deckName.to_a}, status: 200
-        elsif params[:deck_action] == "share"
+        elsif params[:deck_action] == "public"
             @deckName = DeckName.select("id, deck_name, deck_summary, user_id")
             @deckName = @deckName.where(public_status: 1)
             
