@@ -231,7 +231,7 @@ class ApiController < ActionController::Base
             render json: {data: @deckId}, status: 200
             
         elsif params[:deck_action] == "public"
-            @deckId = DeckList.select("cards.* , deck_lists.card_quantity").joins(:card).joins("LEFT JOIN deck_names ON deck_names.id = deck_lists.deck_name_id and deck_names.user_id = deck_lists.user_id").where(:deck_names => {:public_status "1"}).order("card_type desc")
+            @deckId = DeckList.select("cards.* , deck_lists.card_quantity").joins(:card).joins("LEFT JOIN deck_names ON deck_names.id = deck_lists.deck_name_id and deck_names.user_id = deck_lists.user_id").where(:deck_names => {:public_status => 1}).order("card_type desc")
             render json: {data: @deckId}, status: 200
         end
     end
