@@ -194,10 +194,12 @@ class ApiController < ActionController::Base
 				deckList = DeckList.find_by_user_id_and_deck_name_id(params[:user_id], checkDeck.id)
                 deckComment = DeckComment.find_by_deck_id(checkDeck.id)
                 shareDeck = ShareDeck.find_by_deck_name_id(checkDeck.id)
-                if deckComment?
+                if deckComment.nil?
+                else
                     DeckComment.destroy_all(:deck_id => checkDeck.id)
                 end
-                if shareDeck?
+                if shareDeck.nil?
+                else
                     ShareDeck.destroy_all(:deck_id => checkDeck.id)
                 end
 				if deckList.nil?
