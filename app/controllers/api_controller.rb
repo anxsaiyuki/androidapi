@@ -231,13 +231,6 @@ class ApiController < ActionController::Base
         if params[:deck_action] == "own"
             @deckId = DeckList.select("*").joins(:card).where(deck_name_id: params[:deck_id]).order("card_type desc")
             render json: {data: @deckId}, status: 200
-        elsif params[:deck_action] == "share"
-            @deckId = DeckList.select("cards.* , deck_lists.card_quantity").joins(:card).joins("LEFT JOIN deck_names ON deck_names.id = deck_lists.deck_name_id and deck_names.user_id = deck_lists.user_id").joins("LEFT JOIN share_decks ON share_decks.deck_name_id = deck_names.id").where(deck_name_id: params[:deck_id], :share_decks => {:share_user_id => params[:user_id]}).order("card_type desc")
-            render json: {data: @deckId}, status: 200
-            
-        elsif params[:deck_action] == "public"
-            @deckId = DeckList.select("cards.* , deck_lists.card_quantity").joins(:card).joins("LEFT JOIN deck_names ON deck_names.id = deck_lists.deck_name_id and deck_names.user_id = deck_lists.user_id").where(deck_name_id: params[:deck_id]).order("card_type desc")
-            render json: {data: @deckId}, status: 200
         end
     end
     
@@ -251,6 +244,10 @@ class ApiController < ActionController::Base
                 render json: {message: 'You have shared your deck'}, status: 200
             elsif params[:share_action] == "remove_share"
                 
+            elsif params[:share_action] == "public"
+                @deck_name = DeckName.find_by_id(params[:deck_id])
+                @deck_name = @deck_name.update_attributes(public_status: 1)
+                render json: {message: '1'}, status: 200
             end
         
         
@@ -262,7 +259,7 @@ class ApiController < ActionController::Base
             render json: {message: '1'}, status: 200
         
         elsif params[:deck_comment_action] == "get"
-            @deckComment = DeckComment.select("users.user_name, deck_comments.comment, deck_comments.priority").joins("LEFT JOIN users ON users.id = deck_comments.user_id").where(:deck_comments => {:deck_id => params[:deck_id]})
+            @deckComment = DeckComment.select("deck_comments.id, users.user_name, deck_comments.comment, deck_comments.priority").joins("LEFT JOIN users ON users.id = deck_comments.user_id").where(:deck_comments => {:deck_id => params[:deck_id]})
             
             render json: {data: @deckComment}, status: 200
         end
