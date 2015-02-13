@@ -175,6 +175,16 @@ class ApiController < ActionController::Base
                     render json: {message: '5'}, status: 200
                 end
 			end
+        elsif params[:deck_main_action] == "edit_deck_content"
+            
+            if params[:deck_action] == "deck_name"
+                DeckName.find(params[:deck_id]).update_attributes(deck_name: params[:content])
+                render json: {message: '1'}, status: 200
+            else if params[:deck_action] == "deck_summary"
+                DeckName.find(params[:deck_id]).update_attributes(deck_summary: params[:content])
+                render json: {message: '2'}, status: 200
+            end
+            
 		elsif params[:deck_main_action] == "create_deck"
 			checkDeck = DeckName.find_by_user_id_and_deck_name(params[:user_id], params[:deck_name])
 			
