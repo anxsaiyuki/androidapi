@@ -105,13 +105,13 @@ class ApiController < ActionController::Base
                 render json: {data: @friend}, status: 200
                
             elsif params[:friend_action] == "request"
-                @friend_exist = User.find_by_user_name(params[:friend_name])
-                if @friend_exist.nil?
+                friend_exist = User.find_by_user_name(params[:friend_name])
+                if friend_exist.nil?
                     render json: {message: "0"}, status: 200
                 else
-                    @friend_check = FriendList.find_by_user_id_and_friend_id_and_status(params[:user_id],@friend_exist.id, 1)
+                    @friend_check = FriendList.find_by_user_id_and_friend_id_and_status(params[:user_id],friend_exist.id, 1)
                     if @friend_check.nil?
-                        @friend = FriendList.create(user_id: params[:user_id], friend_id: params[:friend_id], status: 1)
+                        @friend = FriendList.create(user_id: params[:user_id], friend_id: friend_exist.id, status: 1)
                         render json: {message: "1"}, status: 200
                     else
                         render json: {message: "2"}, status: 200
