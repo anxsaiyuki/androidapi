@@ -242,12 +242,19 @@ class ApiController < ActionController::Base
                     ShareDeck.create(user_id: params[:user_id], share_user_id: shareList, deck_name_id: params[:deck_id])
                 end
                 render json: {message: 'You have shared your deck'}, status: 200
+                
             elsif params[:share_action] == "remove_share"
+                
                 
             elsif params[:share_action] == "public"
                 @deck_name = DeckName.find_by_id(params[:deck_id])
                 @deck_name = @deck_name.update_attributes(public_status: 1)
                 render json: {message: '1'}, status: 200
+                
+            elsif params[:share_action] == "public_unshare"
+                @deck_name = DeckName.find_by_id(params[:deck_id])
+                @deck_name = @deck_name.update_attributes(public_status: 0)
+                render json: {message: '2'}, status: 200
             end
         
         
