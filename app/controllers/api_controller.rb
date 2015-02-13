@@ -235,9 +235,9 @@ class ApiController < ActionController::Base
     end
     
     def sharedeck
-            share_list = params[:share_user_id_list].split(",")
-            p share_list
+
             if params[:share_action] == "share"
+                share_list = params[:share_user_id_list].split(",")
                 share_list.each do |shareList|
                     ShareDeck.create(user_id: params[:user_id], share_user_id: shareList, deck_name_id: params[:deck_id])
                 end
