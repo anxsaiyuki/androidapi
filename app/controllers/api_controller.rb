@@ -192,14 +192,18 @@ class ApiController < ActionController::Base
 				deckName.destroy
 				
 				deckList = DeckList.find_by_user_id_and_deck_name_id(params[:user_id], checkDeck.id)
+                deckComment = DeckComment.find_by_deck_id(checkDeck.id)
+                shareDeck = ShareDeck.find_by_deck_name_id(checkDeck.id)
+                if deckComment?
+                    DeckComment.destroy_all(:deck_id => checkDeck.id)
+                end
+                if shareDeck?
+                    ShareDeck.destroy_all(:deck_id => checkDeck.id)
+                end
 				if deckList.nil?
 					render json: {message: '1'}, status: 200
 				else
 					DeckList.destroy_all(:user_id => params[:user_id], :deck_id => checkDeck.id)
-				#    deckList.destroy
-				#    deckList.each do |i|
-				#        i.destroy
-				#    end
 					render json: {message: '1'}, status: 200
 				end
 				
