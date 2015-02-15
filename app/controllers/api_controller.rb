@@ -240,7 +240,7 @@ class ApiController < ActionController::Base
             
             render json: {data: @deckName.to_a}, status: 200
         elsif params[:deck_action] == "public"
-            @deckName = DeckName.select("deck_names.id, deck_names.deck_name, deck_names.deck_summary, users.user_name").joins("LEFT JOIN users ON users.id = deck_names.user_id")
+            @deckName = DeckName.select("deck_names.id, deck_names.deck_name, deck_names.deck_summary, users.user_name, users.id as user_id").joins("LEFT JOIN users ON users.id = deck_names.user_id")
             @deckName = @deckName.where(public_status: 1)
             
             render json: {data: @deckName.to_a}, status: 200
