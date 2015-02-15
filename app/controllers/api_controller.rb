@@ -291,7 +291,7 @@ class ApiController < ActionController::Base
         elsif params[:deck_comment_action] == "get"
             @deckComment = DeckComment.select("deck_comments.id, users.user_name, users.id, deck_comments.comment, deck_comments.priority").joins("LEFT JOIN users ON users.id = deck_comments.user_id").where(:deck_comments => {:deck_id => params[:deck_id]})
             @deckOwner = DeckName.find_by_id(params[:deck_id])
-            render json: {data: @deckComment, sub_data: @deckOwner}, status: 200
+            render json: {data: @deckComment, sub_data: @deckOwner.user_id}, status: 200
         elsif params[:deck_comment_action] == "delete"
             deckComment = DeckComment.find(params[:deck_comment_id])
 			deckComment.destroy
